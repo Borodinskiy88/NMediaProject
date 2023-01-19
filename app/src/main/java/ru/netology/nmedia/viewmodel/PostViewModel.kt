@@ -19,7 +19,6 @@ private val empty = Post(
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    // упрощённый вариант
     private val repository: PostRepository = PostRepositoryImpl()
     private val _data = MutableLiveData(FeedModel())
     val data: LiveData<FeedModel>
@@ -35,14 +34,11 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     fun loadPosts() {
         thread {
-            // Начинаем загрузку
             _data.postValue(FeedModel(loading = true))
             try {
-                // Данные успешно получены
                 val posts = repository.getAll()
                 FeedModel(posts = posts, empty = posts.isEmpty())
             } catch (e: IOException) {
-                // Получена ошибка
                 FeedModel(error = true)
             }.also(_data::postValue)
         }
