@@ -1,6 +1,7 @@
 HELP.md
 .gradle
 build/
+google-services.json
 
 ### STS ###
 .apt_generated
@@ -17,7 +18,6 @@ build/
 *.iml
 *.ipr
 out/
-.google-services.json
 
 ### Android Studio ###
 local.properties
