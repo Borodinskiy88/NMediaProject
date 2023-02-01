@@ -13,9 +13,11 @@ private val empty = Post(
     id = 0,
     content = "",
     author = "",
-    likedByMe = false,
+    authorAvatar = " ",
     likes = 0,
-    published = ""
+    likedByMe = false,
+    published = "",
+    attachment = null
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
@@ -44,18 +46,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
         })
     }
-
-//    fun loadPosts() {
-//        thread {
-//            _data.postValue(FeedModel(loading = true))
-//            try {
-//                val posts = repository.getAll()
-//                FeedModel(posts = posts, empty = posts.isEmpty())
-//            } catch (e: IOException) {
-//                FeedModel(error = true)
-//            }.also(_data::postValue)
-//        }
-//    }
 
     fun save() {
         edited.value?.let {
