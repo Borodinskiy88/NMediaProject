@@ -17,7 +17,7 @@ build/
 *.iml
 *.ipr
 out/
-.google-services.json
+google-services.json
 
 ### Android Studio ###
 local.properties
