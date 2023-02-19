@@ -7,9 +7,9 @@
 //import ru.netology.nmedia.dto.Post
 //
 //class PostRepositoryCallbackImpl : PostRepositoryCallback {
-//    override fun getAllAsync(callback: PostRepositoryCallback.Callback<List<Post>>) {
+//    override fun getAll(callback: PostRepositoryCallback.Callback<List<Post>>) {
 //
-//        PostApi.service.getAllAsync()
+//        PostApi.service.getAll()
 //            .enqueue(object : Callback<List<Post>> {
 //                override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
 //                    if (!response.isSuccessful) {
@@ -143,7 +143,7 @@
 //        private val jsonType = "application/json".toMediaType()
 //    }
 //
-//    override fun getAllAsync(callback: PostRepository.Callback<List<Post>>) {
+//    override fun getAll(callback: PostRepository.Callback<List<Post>>) {
 //        val request: Request = Request.Builder()
 //            .url("${BASE_URL}/api/slow/posts")
 //            .build()

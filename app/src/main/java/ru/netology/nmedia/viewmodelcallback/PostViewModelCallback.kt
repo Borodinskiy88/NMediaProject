@@ -34,7 +34,7 @@
 //
 //    fun loadPosts() {
 //        _data.value = (FeedModel(loading = true))
-//        repository.getAllAsync(object : PostRepositoryCallback.Callback<List<Post>> {
+//        repository.getAll(object : PostRepositoryCallback.Callback<List<Post>> {
 //            override fun onSuccess(posts: List<Post>) {
 //                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
 //            }

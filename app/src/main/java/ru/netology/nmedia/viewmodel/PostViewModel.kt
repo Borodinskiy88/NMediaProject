@@ -45,7 +45,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 _state.value = (FeedModelState(loading = true))
-                repository.getAllAsync()
+                repository.getAll()
                 _state.value = FeedModelState()
             } catch (e: Exception) {
                 _state.value = FeedModelState(error = true)
@@ -57,7 +57,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 _state.value = (FeedModelState(refreshing = true))
-                repository.getAllAsync()
+                repository.getAll()
                 _state.value = FeedModelState()
             } catch (e: Exception) {
                 _state.value = FeedModelState(error = true)
