@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
@@ -35,7 +36,7 @@ class FeedFragment : Fragment() {
 
             override fun onLike(post: Post) {
                 if (post.likedByMe) {
-                    viewModel.dislikeById(post.id)
+                    viewModel.unlikeById(post.id)
                 } else {
                     viewModel.likeById(post.id)
                 }
@@ -67,12 +68,30 @@ class FeedFragment : Fragment() {
                     .show()
             }
         }
+        viewModel.newerCount.observe(viewLifecycleOwner) {
+            binding.newPostsFab.isVisible = it > 0
+        }
+
+        binding.newPostsFab.setOnClickListener {
+            binding.newPostsFab.isVisible = false
+            viewModel.unreadPosts()
+        }
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart == 0) {
+                    binding.list.smoothScrollToPosition(0)
+                }
+            }
+        })
+
         viewModel.data.observe(viewLifecycleOwner) { state ->
             adapter.submitList(state.posts)
             binding.emptyText.isVisible = state.empty
         }
 
         binding.swiperefresh.setOnRefreshListener {
+            binding.newPostsFab.isVisible = false
             viewModel.refreshPosts()
         }
 

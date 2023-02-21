@@ -55,8 +55,8 @@
 //            })
 //    }
 //
-//    override fun dislikeById(id: Long, callback: PostRepositoryCallback.Callback<Post>) {
-//        PostApi.service.dislikeById(id)
+//    override fun unlikeById(id: Long, callback: PostRepositoryCallback.Callback<Post>) {
+//        PostApi.service.unlikeById(id)
 //            .enqueue(object : Callback<Post>{
 //                override fun onResponse(call: Call<Post>, response: Response<Post>) {
 //                    if (!response.isSuccessful) {
@@ -191,7 +191,7 @@
 //            })
 //    }
 //
-//    override fun dislikeById(id: Long, callback: PostRepository.Callback<Post>) {
+//    override fun unlikeById(id: Long, callback: PostRepository.Callback<Post>) {
 //        val request: Request = Request.Builder()
 //            .url("${BASE_URL}/api/slow/posts/${id}/likes")
 //            .delete()
