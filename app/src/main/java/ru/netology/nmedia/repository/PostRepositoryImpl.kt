@@ -1,6 +1,12 @@
 package ru.netology.nmedia.repository
 
-import androidx.lifecycle.map
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import ru.netology.nmedia.api.PostApi
 import ru.netology.nmedia.dao.PostDao
@@ -14,11 +20,31 @@ import java.io.IOException
 
 class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
 
-    override val data = postDao.getAll().map(List<PostEntity>::toDto)
+    override val data = postDao.getAll()
+        .map(List<PostEntity>::toDto)
+        .flowOn(Dispatchers.Default)
 
-//    override val data = postDao.getAll().map {
-//        it.map(PostEntity::toDto)
-//    }
+    override fun getNewerCount(latestId: Long): Flow<Int> = flow {
+        while (true) {
+            delay(10_000)
+            try {
+                val response = PostApi.service.getNewer(latestId)
+                if (!response.isSuccessful) {
+                    throw ApiError(response.code(), response.message())
+                }
+                val body = response.body() ?: throw ApiError(response.code(), response.message())
+                postDao.insert(body.toEntity().map {
+                    it.copy(hidden = true)
+                })
+                emit(body.size)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+        .flowOn(Dispatchers.Default)
 
     override suspend fun getAll() {
         try {
@@ -27,12 +53,21 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
                 throw ApiError(response.code(), response.message())
             }
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-//            postDao.insert(body.map(PostEntity::fromDto))
             postDao.insert(body.toEntity())
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
-            throw UnknownError("error_unknown")
+            throw UnknownError()
+        }
+    }
+
+    override suspend fun unreadPosts() {
+        try {
+            postDao.readAll()
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError()
         }
     }
 
@@ -48,9 +83,10 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
-            throw UnknownError("error_unknown")
+            throw UnknownError()
         }
     }
+
     override suspend fun likeById(id: Long) {
         try {
             val response = PostApi.service.likeById(id)
@@ -63,12 +99,13 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
-            throw UnknownError("error_unknown")
+            throw UnknownError()
         }
     }
-    override suspend fun dislikeById(id: Long) {
+
+    override suspend fun unlikeById(id: Long) {
         try {
-            val response = PostApi.service.dislikeById(id)
+            val response = PostApi.service.unlikeById(id)
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
@@ -78,9 +115,10 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
-            throw UnknownError("error_unknown")
+            throw UnknownError()
         }
     }
+
     override suspend fun removeById(id: Long) {
         try {
             val response = PostApi.service.removeById(id)
@@ -92,7 +130,7 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
-            throw UnknownError("error_unknown")
+            throw UnknownError()
         }
     }
 }

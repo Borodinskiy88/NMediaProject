@@ -95,7 +95,7 @@
 //        })
 //    }
 //
-//    fun dislikeById(id: Long) {
+//    fun unlikeById(id: Long) {
 //        repository.likeById(id, object : PostRepositoryCallback.Callback<Post> {
 //            override fun onSuccess(value: Post) {
 //                val posts = _data.value?.posts.orEmpty()
