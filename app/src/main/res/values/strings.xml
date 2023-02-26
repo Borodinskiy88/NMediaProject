@@ -22,4 +22,9 @@
     <string name="channel_remote_description">Notifications from remote server</string>
     <string name="new_post_banner">Recent entries</string>
     <string name="description_new_post_banner">Load recent entries</string>
+    <string name="post_clear">Clear</string>
+    <string name="photo_error">Photo error</string>
+    <string name="feed_tittle">Feed</string>
+    <string name="new_post">New Post</string>
+    <string name="new_image">Image</string>
 </resources>

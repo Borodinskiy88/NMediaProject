@@ -3,11 +3,13 @@ package ru.netology.nmedia.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
@@ -18,6 +20,7 @@ interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onRemove(post: Post) {}
     fun onShare(post: Post) {}
+    fun onAttachment(post: Post) {}
 }
 
 class PostsAdapter(
@@ -40,7 +43,7 @@ class PostViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private val avatarUrl = "${BuildConfig.BASE_URL}/avatars/"
-    private val attachmentUrl = "${BuildConfig.BASE_URL}/images/"
+    private val attachmentUrl = "${BuildConfig.BASE_URL}/media/"
 
     fun bind(post: Post) {
         binding.apply {
@@ -87,17 +90,33 @@ class PostViewHolder(
                 onInteractionListener.onShare(post)
             }
 
+            attachment.setOnClickListener {
+                onInteractionListener.onAttachment(post)
+            }
+
             if (post.attachment != null) {
+                attachment.visibility = View.VISIBLE
+                attachment.load(attachmentUrl + post.attachment.url)
+//                Glide.with(attachment)
+//                    .load(attachmentUrl + post.attachment.url)
+//                    .timeout(10_000)
+//                    .into(binding.attachment)
+            }
+            else {
                 attachment.visibility = View.GONE
-                attachment.contentDescription = post.attachment.description
-                Glide.with(attachment)
-                    .load(attachmentUrl + post.attachment.url)
-                    .timeout(10_000)
-                    .into(binding.attachment)
             }
         }
     }
 }
+
+fun ImageView.load(url: String, vararg transforms: BitmapTransformation = emptyArray()) =
+    Glide.with(this)
+        .load(url)
+        .error(R.drawable.ic_error_100dp)
+        .placeholder(R.drawable.ic_loading_100dp)
+        .timeout(10_000)
+        .transform(*transforms)
+        .into(this)
 
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
