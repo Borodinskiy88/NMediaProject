@@ -28,4 +28,15 @@
     <string name="feed_tittle">Лента</string>
     <string name="new_post">Новый пост</string>
     <string name="new_image">Новое изображение</string>
+    <string name="login">Логин</string>
+    <string name="registration">Регистрация</string>
+    <string name="logout">Выйти</string>
+    <string name="sign_in">Войти</string>
+    <string name="username">Имя</string>
+    <string name="password">Пароль</string>
+    <string name="login_now">Регистрироаться сейчас</string>
+    <string name="sign_in_with_password">Войти с помощью пароля</string>
+    <string name="is_blank">Необходимо заполнить все поля</string>
+    <string name="invalid_login_or_password">Неверный логин или пароль</string>
+    <string name="fragment_login">Войти в аккаунт</string>
 </resources>

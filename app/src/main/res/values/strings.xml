@@ -27,4 +27,16 @@
     <string name="feed_tittle">Feed</string>
     <string name="new_post">New Post</string>
     <string name="new_image">Image</string>
+    <string name="login">Login</string>
+    <string name="registration">Registration</string>
+    <string name="logout">Logout</string>
+    <string name="sign_in">Sign in</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login_now">Login now</string>
+    <string name="sign_in_with_password">Sign in with password</string>
+    <string name="is_blank">Login or password is blank</string>
+    <string name="invalid_login_or_password">Invalid login or password</string>
+    <string name="fragment_login">Log into your account</string>
+
 </resources>

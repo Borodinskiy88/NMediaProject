@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -52,15 +53,17 @@ class PostViewHolder(
             Glide.with(avatar)
                     .load(avatarUrl + post.authorAvatar)
                     .circleCrop()
-                    .placeholder(R.drawable.ic_loading_100dp)
-                    .error(R.drawable.ic_error_100dp)
-                    .timeout(10_000)
-                    .into(avatar)
+                .placeholder(R.drawable.ic_loading_100dp)
+                .error(R.drawable.ic_error_100dp)
+                .timeout(10_000)
+                .into(avatar)
 
             published.text = post.published
             content.text = post.content
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
+
+            menu.isVisible = post.ownedByMe
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -97,10 +100,6 @@ class PostViewHolder(
             if (post.attachment != null) {
                 attachment.visibility = View.VISIBLE
                 attachment.load(attachmentUrl + post.attachment.url)
-//                Glide.with(attachment)
-//                    .load(attachmentUrl + post.attachment.url)
-//                    .timeout(10_000)
-//                    .into(binding.attachment)
             }
             else {
                 attachment.visibility = View.GONE

@@ -36,11 +36,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    tools:srcCompat="@tools:sample/avatars[11]" />
+                    tools:srcCompat="@tools:sample/avatars[3]" />
 
                 <Button
                     android:id="@+id/clear"
                     android:layout_width="wrap_content"
+                    android:backgroundTint="@color/colorTiffanyBlue"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:text="@string/post_clear" />
@@ -55,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?colorPrimary">
+        android:background="@color/colorTiffanyBlue">
 
         <ImageView
             android:id="@+id/gallery"
