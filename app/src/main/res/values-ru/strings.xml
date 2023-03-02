@@ -39,4 +39,10 @@
     <string name="is_blank">Необходимо заполнить все поля</string>
     <string name="invalid_login_or_password">Неверный логин или пароль</string>
     <string name="fragment_login">Войти в аккаунт</string>
+    <string name="cancel">Отмена</string>
+    <string name="are_you_sure">Вы уверены?</string>
+    <string name="log_out_of_your_account">Вы хотите выйти из аккаунта?</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="logged_out_of_your_account">Вы вышли из аккаунта</string>
 </resources>

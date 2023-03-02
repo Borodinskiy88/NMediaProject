@@ -38,5 +38,11 @@
     <string name="is_blank">Login or password is blank</string>
     <string name="invalid_login_or_password">Invalid login or password</string>
     <string name="fragment_login">Log into your account</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="log_out_of_your_account">Log out of your account?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="logged_out_of_your_account">You have logged out of your account</string>
 
 </resources>

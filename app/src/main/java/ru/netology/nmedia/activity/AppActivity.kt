@@ -16,6 +16,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.messaging.FirebaseMessaging
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
@@ -71,7 +72,22 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                             true
                         }
                         R.id.logout -> {
-                            AppAuth.geiInstance().removeAuth()
+                            MaterialAlertDialogBuilder(this@AppActivity)
+                                .setTitle(R.string.logout)
+                                .setMessage(R.string.log_out_of_your_account)
+                                .setNegativeButton(R.string.no) { dialog, _ ->
+                                    dialog.cancel()
+                                }
+                                .setPositiveButton(R.string.yes) { _, _ ->
+                                    AppAuth.geiInstance().removeAuth()
+                                    Toast.makeText(
+                                        this@AppActivity,
+                                        R.string.logged_out_of_your_account,
+                                        Toast.LENGTH_LONG
+                                    )
+                                        .show()
+                                }
+                                .show()
                             true
                         }
                         else -> false
