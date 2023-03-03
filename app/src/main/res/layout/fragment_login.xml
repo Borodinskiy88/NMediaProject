@@ -4,59 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/common_spacing"
+    android:layout_margin="@dimen/common_spacing"
     tools:context=".activity.LoginFragment">
 
-    <TextView
-        android:id="@+id/loginWelcome"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/loginLogLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/common_spacing"
-        android:text="@string/sign_in"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="@dimen/common_spacing"
+        app:layout_constraintBottom_toTopOf="@id/passwordLogLayout">
 
-    <EditText
-        android:id="@+id/login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints="@string/login"
-        android:hint="@string/login"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        app:layout_constraintBottom_toTopOf="@id/password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/loginLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/password"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLogLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints="@string/password"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        android:layout_margin="@dimen/common_spacing"
+        app:endIconMode="password_toggle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:enabled="true"
-        android:textColor="@color/ic_launcher_background"
-        android:backgroundTint="@color/colorTiffanyBlue"
-        style="?attr/materialButtonOutlinedStyle"
+        android:layout_marginTop="@dimen/common_spacing"
         android:text="@string/sign_in_with_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordLogLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,18 @@
 package ru.netology.nmedia.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
@@ -30,16 +33,34 @@ class FeedFragment : Fragment() {
     ): View {
         val binding = FragmentFeedBinding.inflate(inflater, container, false)
 
+        val token = context?.getSharedPreferences("auth", Context.MODE_PRIVATE)
+            ?.getString("TOKEN_KEY", null)
+
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
             }
 
             override fun onLike(post: Post) {
-                if (post.likedByMe) {
-                    viewModel.unlikeById(post.id)
+                if (token == null) {
+                    MaterialAlertDialogBuilder(context!!)
+                        .setTitle(R.string.fragment_login)
+                        .setMessage(R.string.please_log_in_to_your_account)
+                        .setNegativeButton(R.string.continue_as_a_guest) { dialog, _ ->
+                            dialog.cancel()
+                        }
+                        .setPositiveButton(R.string.login) { _, _ ->
+                            findNavController().navigate(R.id.action_feedFragment_to_loginFragment)
+                            Snackbar.make(binding.root, R.string.login_exit, Snackbar.LENGTH_LONG)
+                                .show()
+                        }
+                        .show()
                 } else {
-                    viewModel.likeById(post.id)
+                    if (!post.likedByMe) {
+                        viewModel.likeById(post.id)
+                    } else {
+                        viewModel.unlikeById(post.id)
+                    }
                 }
             }
 
@@ -80,7 +101,11 @@ class FeedFragment : Fragment() {
             }
         }
         viewModel.newerCount.observe(viewLifecycleOwner) {
-            binding.newPostsFab.isVisible = it > 0
+            if (it > 0) {
+                binding.newPostsFab.isVisible = true
+            } else {
+                binding.newPostsFab.isGone = true
+            }
         }
 
         binding.newPostsFab.setOnClickListener {
@@ -107,7 +132,20 @@ class FeedFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+            if (token == null) {
+                MaterialAlertDialogBuilder(this.requireContext())
+                    .setTitle(R.string.fragment_login)
+                    .setMessage(R.string.please_log_in_to_your_account)
+                    .setNegativeButton(R.string.continue_as_a_guest) { dialog, _ ->
+                        dialog.cancel()
+                    }
+                    .setPositiveButton(R.string.login) { _, _ ->
+                        findNavController().navigate(R.id.action_feedFragment_to_loginFragment)
+                    }
+                    .show()
+            } else {
+                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+            }
         }
 
         return binding.root

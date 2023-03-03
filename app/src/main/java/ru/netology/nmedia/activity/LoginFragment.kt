@@ -27,8 +27,8 @@ class LoginFragment : Fragment() {
 
         with(binding) {
             loginButton.setOnClickListener {
-                val login = login.text.toString()
-                val password = password.text.toString()
+                val login = loginLog.text.toString()
+                val password = passwordLog.text.toString()
                 loginViewModel.login(login, password)
 
             }

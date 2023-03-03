@@ -37,10 +37,10 @@ class LoginViewModel : ViewModel() {
         }
         _state.value = AuthModelState()
     }
-
-    fun logout() {
-        AppAuth.geiInstance().removeAuth()
-        _state.value = AuthModelState(failedEntry = true)
-    }
+//
+//    fun logout() {
+//        AppAuth.geiInstance().removeAuth()
+//        _state.value = AuthModelState(failedEntry = true)
+//    }
 }
 
