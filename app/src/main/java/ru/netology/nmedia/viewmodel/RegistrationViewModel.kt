@@ -37,7 +37,7 @@ class RegistrationViewModel : ViewModel() {
         _media.value = MediaModel(uri, file)
     }
 
-    fun register(login: String, pass: String, name: String) = viewModelScope.launch {
+    fun register(login: String, pass: String, repeatPass: String, name: String) = viewModelScope.launch {
         if (login.isNotBlank() && pass.isNotBlank() && name.isNotBlank()) {
             val avatar = media.value
             if (avatar != null) {

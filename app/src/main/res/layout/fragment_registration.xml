@@ -19,7 +19,7 @@
             android:layout_width="@dimen/common_spacing"
             android:layout_height="@dimen/common_spacing"
             android:layout_gravity="center"
-            android:contentDescription="@string/title_choose_image_provider"
+            android:contentDescription="@string/preview_avatar"
             tools:src="@tools:sample/avatars" />
 
         <com.google.android.material.button.MaterialButton
