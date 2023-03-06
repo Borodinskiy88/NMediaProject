@@ -58,4 +58,9 @@
     <string name="empty_field">Необходимо заполнить все поля</string>
     <string name="successful_registration">Успешная регистрация</string>
     <string name="preview_avatar">Предварительный просмотр</string>
+    <string name="choose">Выбор</string>
+    <string name="gallery">Галерея</string>
+    <string name="photo">Фото</string>
+    <string name="pass_check">Корректный пароль</string>
+    <string name="match_passwords">Пароли должны совпадать</string>
 </resources>
