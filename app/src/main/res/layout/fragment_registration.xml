@@ -8,14 +8,14 @@
     tools:context=".activity.RegistrationFragment">
 
     <FrameLayout
-        android:id="@+id/registration_container"
+        android:id="@+id/registrationContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common_spacing"
         app:layout_constraintBottom_toTopOf="@+id/nameRegLayout">
 
         <ImageView
-            android:id="@+id/preview_avatar"
+            android:id="@+id/previewAvatar"
             android:layout_width="@dimen/common_spacing"
             android:layout_height="@dimen/common_spacing"
             android:layout_gravity="center"

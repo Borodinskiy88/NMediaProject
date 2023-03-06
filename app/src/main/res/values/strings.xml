@@ -61,5 +61,6 @@
     <string name="gallery">Gallery</string>
     <string name="photo">Photo</string>
     <string name="pass_check">Password check</string>
+    <string name="match_passwords">Passwords must match</string>
 
 </resources>

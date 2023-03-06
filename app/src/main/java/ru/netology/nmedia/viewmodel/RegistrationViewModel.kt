@@ -10,10 +10,14 @@ import ru.netology.nmedia.model.AuthModelState
 import ru.netology.nmedia.model.MediaModel
 import ru.netology.nmedia.repository.AuthRepository
 import ru.netology.nmedia.repository.AuthRepositoryImpl
-import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
 
 class RegistrationViewModel : ViewModel() {
+
+    val data: LiveData<AuthModel?> = AppAuth.geiInstance()
+        .data
+        .asLiveData(Dispatchers.Default)
+
     private val repository: AuthRepository = AuthRepositoryImpl()
 
     private val _state = MutableLiveData<AuthModelState>()
@@ -24,20 +28,8 @@ class RegistrationViewModel : ViewModel() {
     val media: LiveData<MediaModel?>
         get() = _media
 
-    //todo
-    private val _registrationSuccess = SingleLiveEvent<AuthModel>()
-    val registrationSuccess: LiveData<AuthModel>
-        get() = _registrationSuccess
 
-    val data: LiveData<AuthModel?> = AppAuth.geiInstance()
-        .data
-        .asLiveData(Dispatchers.Default)
-
-    fun addPhoto(uri: Uri, file: File) {
-        _media.value = MediaModel(uri, file)
-    }
-
-    fun register(login: String, pass: String, repeatPass: String, name: String) = viewModelScope.launch {
+    fun register(login: String, pass: String, name: String) = viewModelScope.launch {
         if (login.isNotBlank() && pass.isNotBlank() && name.isNotBlank()) {
             val avatar = media.value
             if (avatar != null) {
@@ -67,9 +59,11 @@ class RegistrationViewModel : ViewModel() {
         clearPhoto()
     }
 
+    fun addPhoto(uri: Uri, file: File) {
+        _media.value = MediaModel(uri, file)
+    }
+
     fun clearPhoto() {
         _media.value = null
     }
-
-
 }
