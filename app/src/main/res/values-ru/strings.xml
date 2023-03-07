@@ -23,4 +23,9 @@
     <string name="channel_remote_description">Уведомления с удалённого сервера</string>
     <string name="new_post_banner">Свежие записи</string>
     <string name="description_new_post_banner">Загрузить свежие записи</string>
+    <string name="post_clear">Очистить</string>
+    <string name="photo_error">Ошибка фото</string>
+    <string name="feed_tittle">Лента</string>
+    <string name="new_post">Новый пост</string>
+    <string name="new_image">Новое изображение</string>
 </resources>
