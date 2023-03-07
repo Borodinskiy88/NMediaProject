@@ -92,9 +92,9 @@ class PostRepositoryImpl(private val postDao: PostDao) : PostRepository {
         }
     }
 
-    override suspend fun saveWithAttachment(post: Post, mediaModel: MediaModel) {
+    override suspend fun saveWithAttachment(post: Post, media: MediaModel) {
         try {
-            val media = upload(mediaModel)
+            val media = upload(media)
             val response = PostApi.service.save(
                 post.copy(
                     attachment = Attachment(media.id, AttachmentType.IMAGE)
