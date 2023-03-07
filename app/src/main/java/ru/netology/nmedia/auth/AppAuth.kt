@@ -46,7 +46,7 @@ class AppAuth private constructor(context: Context) {
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val ID_KEY = "ID_KEY"
 
-        fun geiInstance(): AppAuth = synchronized(this) {
+        fun getInstance(): AppAuth = synchronized(this) {
             requireNotNull(INSTANCE) {
                 "You must call unit(context: Context)"
             }

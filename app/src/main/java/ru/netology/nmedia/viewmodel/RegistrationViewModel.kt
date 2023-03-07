@@ -14,7 +14,7 @@ import java.io.File
 
 class RegistrationViewModel : ViewModel() {
 
-    val data: LiveData<AuthModel?> = AppAuth.geiInstance()
+    val data: LiveData<AuthModel?> = AppAuth.getInstance()
         .data
         .asLiveData(Dispatchers.Default)
 
@@ -36,7 +36,7 @@ class RegistrationViewModel : ViewModel() {
                 try {
                     _state.value = AuthModelState(loading = true)
                     val result = repository.registerWithPhoto(login, pass, name, avatar)
-                    AppAuth.geiInstance().setAuth(result.id, result.token)
+                    AppAuth.getInstance().setAuth(result.id, result.token)
                     _state.value = AuthModelState(successfulEntry = true)
                 } catch (e: Exception) {
                     _state.value = AuthModelState(error = true)
@@ -46,7 +46,7 @@ class RegistrationViewModel : ViewModel() {
                 try {
                     _state.value = AuthModelState(loading = true)
                     val result = repository.register(login, pass, name)
-                    AppAuth.geiInstance().setAuth(result.id, result.token)
+                    AppAuth.getInstance().setAuth(result.id, result.token)
                     _state.value = AuthModelState(successfulEntry = true)
                 } catch (e: Exception) {
                     _state.value = AuthModelState(error = true)

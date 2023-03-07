@@ -27,7 +27,7 @@ private val logging = HttpLoggingInterceptor().apply {
 private val okhttp = OkHttpClient.Builder()
     .addInterceptor(logging)
     .addInterceptor { chain ->
-        val request = AppAuth.geiInstance().data.value?.token?.let {
+        val request = AppAuth.getInstance().data.value?.token?.let {
             chain.request().newBuilder()
                 .addHeader("Authorization", it)
                 .build()

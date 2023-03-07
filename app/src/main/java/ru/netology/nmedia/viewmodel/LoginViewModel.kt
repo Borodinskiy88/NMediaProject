@@ -23,7 +23,7 @@ class LoginViewModel : ViewModel() {
             try {
                 _state.value = (AuthModelState(loading = true))
                 val result = repository.login(login, password)
-                AppAuth.geiInstance().setAuth(result.id, result.token)
+                AppAuth.getInstance().setAuth(result.id, result.token)
                 _state.value = AuthModelState(successfulEntry = true)
             } catch (e: Exception) {
                 when (e) {
@@ -37,10 +37,5 @@ class LoginViewModel : ViewModel() {
         }
         _state.value = AuthModelState()
     }
-//
-//    fun logout() {
-//        AppAuth.geiInstance().removeAuth()
-//        _state.value = AuthModelState(failedEntry = true)
-//    }
 }
 

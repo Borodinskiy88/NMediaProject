@@ -83,7 +83,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                                     dialog.cancel()
                                 }
                                 .setPositiveButton(R.string.yes) { _, _ ->
-                                    AppAuth.geiInstance().removeAuth()
+                                    AppAuth.getInstance().removeAuth()
                                     Toast.makeText(
                                         this@AppActivity,
                                         R.string.logged_out_of_your_account,

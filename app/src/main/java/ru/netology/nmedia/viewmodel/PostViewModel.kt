@@ -41,7 +41,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         get() = _state
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val data: LiveData<FeedModel> = AppAuth.geiInstance().data.flatMapLatest { authState ->
+    val data: LiveData<FeedModel> = AppAuth.getInstance().data.flatMapLatest { authState ->
         repository.data
             .map { posts ->
                 FeedModel(posts.map {

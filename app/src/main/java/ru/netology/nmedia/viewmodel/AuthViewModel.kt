@@ -7,7 +7,7 @@ import ru.netology.nmedia.auth.AppAuth
 
 class AuthViewModel : ViewModel() {
 
-    val data = AppAuth.geiInstance()
+    val data = AppAuth.getInstance()
         .data
         .asLiveData(Dispatchers.Default)
 
