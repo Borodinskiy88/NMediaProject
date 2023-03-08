@@ -3,13 +3,13 @@
 //import retrofit2.Call
 //import retrofit2.Callback
 //import retrofit2.Response
-//import ru.netology.nmedia.api.PostApi
+//import ru.netology.nmedia.api.Api
 //import ru.netology.nmedia.dto.Post
 //
 //class PostRepositoryCallbackImpl : PostRepositoryCallback {
 //    override fun getAll(callback: PostRepositoryCallback.Callback<List<Post>>) {
 //
-//        PostApi.service.getAll()
+//        Api.service.getAll()
 //            .enqueue(object : Callback<List<Post>> {
 //                override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
 //                    if (!response.isSuccessful) {
@@ -33,7 +33,7 @@
 //
 //    override fun likeById(id: Long, callback: PostRepositoryCallback.Callback<Post>) {
 //
-//        PostApi.service.likeById(id)
+//        Api.service.likeById(id)
 //            .enqueue(object : Callback<Post>{
 //                override fun onResponse(call: Call<Post>, response: Response<Post>) {
 //                    if (!response.isSuccessful) {
@@ -56,7 +56,7 @@
 //    }
 //
 //    override fun unlikeById(id: Long, callback: PostRepositoryCallback.Callback<Post>) {
-//        PostApi.service.unlikeById(id)
+//        Api.service.unlikeById(id)
 //            .enqueue(object : Callback<Post>{
 //                override fun onResponse(call: Call<Post>, response: Response<Post>) {
 //                    if (!response.isSuccessful) {
@@ -79,7 +79,7 @@
 //    }
 //
 //    override fun save(post: Post, callback: PostRepositoryCallback.Callback<Post>) {
-//        PostApi.service.save(post)
+//        Api.service.save(post)
 //            .enqueue(object : Callback<Post> {
 //                override fun onResponse(call: Call<Post>, response: Response<Post>) {
 //                    if (!response.isSuccessful) {
@@ -102,7 +102,7 @@
 //    }
 //
 //    override fun removeById(id: Long, callback: PostRepositoryCallback.Callback<Unit>) {
-//        PostApi.service.removeById(id)
+//        Api.service.removeById(id)
 //            .enqueue(object : Callback<Unit> {
 //                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
 //                    if (!response.isSuccessful) {
@@ -126,7 +126,7 @@
 //import okhttp3.MediaType.Companion.toMediaType
 //import okhttp3.RequestBody.Companion.toRequestBody
 //import okhttp3.internal.EMPTY_REQUEST
-//import ru.netology.nmedia.api.PostApi
+//import ru.netology.nmedia.api.Api
 //import ru.netology.nmedia.dto.Post
 //import java.io.IOException
 //import java.util.concurrent.TimeUnit

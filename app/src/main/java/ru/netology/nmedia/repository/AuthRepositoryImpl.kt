@@ -4,7 +4,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import ru.netology.nmedia.api.PostApi
+import ru.netology.nmedia.api.Api
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.model.AuthModel
@@ -15,7 +15,7 @@ class AuthRepositoryImpl : AuthRepository {
 
     override suspend fun login(login: String, password: String): AuthModel {
         try {
-            val response = PostApi.service.login(login, password)
+            val response = Api.service.login(login, password)
 
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
@@ -33,7 +33,7 @@ class AuthRepositoryImpl : AuthRepository {
 
     override suspend fun register(login: String, password: String, name: String): AuthModel {
         try {
-            val response = PostApi.service.register(login, password, name)
+            val response = Api.service.register(login, password, name)
 
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
@@ -62,7 +62,7 @@ class AuthRepositoryImpl : AuthRepository {
             val loginRequestBody = login.toRequestBody("text/plain".toMediaType())
             val passRequestBody = password.toRequestBody("text/plain".toMediaType())
             val nameRequestBody = login.toRequestBody("text/plain".toMediaType())
-            val response = PostApi.service.registerWithPhoto(
+            val response = Api.service.registerWithPhoto(
                 loginRequestBody,
                 passRequestBody,
                 nameRequestBody,
