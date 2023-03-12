@@ -13,12 +13,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewmodel.PostViewModel
 
+@AndroidEntryPoint
 @Suppress("UNUSED_EXPRESSION")
 class NewPostFragment : Fragment() {
 
@@ -39,15 +41,15 @@ class NewPostFragment : Fragment() {
             false
         )
         val photoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-           when(it.resultCode) {
-               ImagePicker.RESULT_ERROR -> {
-                   Snackbar.make(binding.root, R.string.photo_error, Snackbar.LENGTH_LONG).show()
-               }
-               else -> {
-                   val uri = it.data?.data ?: return@registerForActivityResult
-                   viewModel.changePhoto(uri, uri.toFile())
-               }
-           }
+            when(it.resultCode) {
+                ImagePicker.RESULT_ERROR -> {
+                    Snackbar.make(binding.root, R.string.photo_error, Snackbar.LENGTH_LONG).show()
+                }
+                else -> {
+                    val uri = it.data?.data ?: return@registerForActivityResult
+                    viewModel.changePhoto(uri, uri.toFile())
+                }
+            }
         }
 
         arguments?.textArg

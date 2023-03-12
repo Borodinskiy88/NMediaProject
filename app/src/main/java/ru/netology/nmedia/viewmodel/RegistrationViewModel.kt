@@ -2,6 +2,7 @@ package ru.netology.nmedia.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
@@ -9,16 +10,19 @@ import ru.netology.nmedia.model.AuthModel
 import ru.netology.nmedia.model.AuthModelState
 import ru.netology.nmedia.model.MediaModel
 import ru.netology.nmedia.repository.AuthRepository
-import ru.netology.nmedia.repository.AuthRepositoryImpl
 import java.io.File
+import javax.inject.Inject
 
-class RegistrationViewModel : ViewModel() {
+@HiltViewModel
+class RegistrationViewModel @Inject constructor(
+    private val repository: AuthRepository,
+    private val appAuth: AppAuth
+) : ViewModel() {
 
-    val data: LiveData<AuthModel?> = AppAuth.getInstance()
+    val data: LiveData<AuthModel?> = appAuth
         .data
         .asLiveData(Dispatchers.Default)
 
-    private val repository: AuthRepository = AuthRepositoryImpl()
 
     private val _state = MutableLiveData<AuthModelState>()
     val state: LiveData<AuthModelState>
@@ -36,7 +40,7 @@ class RegistrationViewModel : ViewModel() {
                 try {
                     _state.value = AuthModelState(loading = true)
                     val result = repository.registerWithPhoto(login, pass, name, avatar)
-                    AppAuth.getInstance().setAuth(result.id, result.token)
+                    appAuth.setAuth(result.id, result.token)
                     _state.value = AuthModelState(successfulEntry = true)
                 } catch (e: Exception) {
                     _state.value = AuthModelState(error = true)
@@ -46,7 +50,7 @@ class RegistrationViewModel : ViewModel() {
                 try {
                     _state.value = AuthModelState(loading = true)
                     val result = repository.register(login, pass, name)
-                    AppAuth.getInstance().setAuth(result.id, result.token)
+                    appAuth.setAuth(result.id, result.token)
                     _state.value = AuthModelState(successfulEntry = true)
                 } catch (e: Exception) {
                     _state.value = AuthModelState(error = true)

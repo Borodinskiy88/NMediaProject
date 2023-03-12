@@ -18,13 +18,29 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.messaging.FirebaseMessaging
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.viewmodel.AuthViewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AppActivity : AppCompatActivity(R.layout.activity_app) {
+
+    @Inject
+    lateinit var appAuth: AppAuth
+
+    @Inject
+    lateinit var googleApiAvailability: GoogleApiAvailability
+
+    @Inject
+    lateinit var firebaseMessaging: FirebaseMessaging
+
+    private val viewModel: AuthViewModel by viewModels()
+
     lateinit var appBarConfiguration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,6 +63,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                     }
                 )
         }
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -54,15 +71,16 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         val authViewModel by viewModels<AuthViewModel>()
-
         var previousMenuProvider: MenuProvider? = null
+
         authViewModel.data.observe(this) {
             previousMenuProvider?.let(::removeMenuProvider)
+
             addMenuProvider(object : MenuProvider {
                 override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                     menuInflater.inflate(R.menu.menu_auth, menu)
-                    menu.setGroupVisible(R.id.unauthorized, !authViewModel.authorized)
-                    menu.setGroupVisible(R.id.authorized, authViewModel.authorized)
+                    menu.setGroupVisible(R.id.unauthorized, !viewModel.authorized)
+                    menu.setGroupVisible(R.id.authorized, viewModel.authorized)
                 }
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
@@ -83,7 +101,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                                     dialog.cancel()
                                 }
                                 .setPositiveButton(R.string.yes) { _, _ ->
-                                    AppAuth.getInstance().removeAuth()
+                                    appAuth.removeAuth()
                                     Toast.makeText(
                                         this@AppActivity,
                                         R.string.logged_out_of_your_account,
@@ -96,14 +114,16 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                         }
                         else -> false
                     }
-            }.also { previousMenuProvider = it })
+            }.also {
+                previousMenuProvider = it
+            })
         }
 
         checkGoogleApiAvailability()
     }
 
     private fun checkGoogleApiAvailability() {
-        with(GoogleApiAvailability.getInstance()) {
+        with(googleApiAvailability) {
             val code = isGooglePlayServicesAvailable(this@AppActivity)
             if (code == ConnectionResult.SUCCESS) {
                 return@with
@@ -112,11 +132,15 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                 getErrorDialog(this@AppActivity, code, 9000)?.show()
                 return
             }
-            Toast.makeText(this@AppActivity, R.string.google_play_unavailable, Toast.LENGTH_LONG)
+            Toast.makeText(
+                this@AppActivity,
+                R.string.google_play_unavailable,
+                Toast.LENGTH_LONG
+            )
                 .show()
         }
 
-        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+        firebaseMessaging.token.addOnSuccessListener {
             println(it)
         }
     }

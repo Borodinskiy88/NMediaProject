@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.load
 import ru.netology.nmedia.databinding.FragmentImageBinding
 
+@AndroidEntryPoint
 class ImageFragment : Fragment() {
 
     override fun onCreateView(

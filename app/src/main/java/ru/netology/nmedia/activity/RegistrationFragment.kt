@@ -14,12 +14,13 @@ import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentRegistrationBinding
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.viewmodel.RegistrationViewModel
 
-
+@AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
     private lateinit var binding: FragmentRegistrationBinding
